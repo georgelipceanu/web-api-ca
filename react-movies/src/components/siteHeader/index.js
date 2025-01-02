@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { AuthContext } from "../../contexts/authContext";
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -20,7 +21,7 @@ const SiteHeader = ({ history }) => {
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  
+  const context = useContext(AuthContext);
   const navigate = useNavigate();
 
   const menuOptions = [
@@ -42,12 +43,15 @@ const SiteHeader = ({ history }) => {
     setAnchorEl(event.currentTarget);
   };
 
+  console.log(context)
   return (
     <>
       <AppBar position="fixed" color="secondary">
         <Toolbar>
           <Typography variant="h4" sx={{ flexGrow: 1 }}>
             GEORGE'S TMDB APP
+            {context.isAuthenticated && `, Welcome ${context.userName}`} 
+            {/* IF USER IS AUTHENTICATED, DISPLAY NAME */}
           </Typography>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             EVERY, SINGLE, MOVIE, EVER!

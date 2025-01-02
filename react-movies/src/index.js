@@ -48,6 +48,8 @@ const App = () => {
         <MoviesContextProvider>
           <ActorsContextProvider>
           <Routes>
+          <Route path="/" element={<SignInPage />} />
+          <Route element={<ProtectedRoutes />}>
             <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
             <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
             <Route path="/movies/favorite_actors" element={<FavoriteActorsPage />} />
@@ -59,9 +61,9 @@ const App = () => {
             <Route path="/movies/:id" element={<MoviePage />} />
             <Route path="/movies/:id/recommended" element={ <RecommendedPage /> } />
             <Route path="/home" element={<HomePage />} />
-            <Route path="/" element={<SignInPage />} />
             <Route path="/actors/:id" element={<ActorPage />} />
-            <Route path="*" element={ <Navigate to="/" /> } />
+          </Route>
+          <Route path="*" element={ <Navigate to="/" /> } />
           </Routes>
           </ActorsContextProvider>
         </MoviesContextProvider>

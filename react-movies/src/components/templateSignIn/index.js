@@ -22,6 +22,10 @@ function SignInTemplate() {
 
   const [APIuserName, setAPIUserName] = useState("");
   const [APIpassword, setAPIPassword] = useState("");
+  const [signupAPIuserName, setSignupAPIUserName] = useState("");
+  const [signupAPIpassword, setSignupAPIPassword] = useState("");
+  const [signupAPIpasswordAgain, setSignupAPIPasswordAgain] = useState("");
+  const [registered, setRegistered] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -86,13 +90,24 @@ function SignInTemplate() {
       context.authenticate(APIuserName, APIpassword);
   };
 
-  let location = useLocation();
-
-  // Set 'from' to path where browser is redirected after a successful login - either / or the protected path user requested
-  const { from } = location.state ? { from: location.state.from.pathname } : { from: "/" };
 
   if (context.isAuthenticated === true) {
       return <Navigate to={"/home"} />;
+  }
+
+  const register = () => {
+    let passwordRegEx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    const validPassword = passwordRegEx.test(signupAPIpassword);
+
+    if (validPassword && signupAPIpassword === signupAPIpasswordAgain) {
+      context.register(signupAPIuserName, signupAPIpassword);
+      setRegistered(true);
+      console.log("success")
+    } else console.log("fail")
+  }
+
+  if (registered === true) {
+    return <Navigate to="/home" />;
   }
 
   return (
@@ -138,19 +153,30 @@ function SignInTemplate() {
         <TextField
           sx={{ margin: 1, minWidth: 220, backgroundColor: "#7ae6a3" }}
           id="sign-up-email"
-          label="Email"
-          value={signUpEmail}
-          onChange={handleSignUpEmailChange}
+          label="Username"
+          value={signupAPIuserName}
+          onChange={e => {
+            setSignupAPIUserName(e.target.value);}}
         />
         <TextField
           sx={{ margin: 1, minWidth: 220, backgroundColor: "#7ae6a3" }}
           id="sign-up-pass"
           label="Password"
           type="password"
-          value={signUpPassword}
-          onChange={handleSignUpPasswordChange}
+          value={signupAPIpassword}
+          onChange={e => {
+            setSignupAPIPassword(e.target.value);}}
         />
-        <Button variant="contained" onClick={signUp}>
+        <TextField
+          sx={{ margin: 1, minWidth: 220, backgroundColor: "#7ae6a3" }}
+          id="sign-up-pass"
+          label="Confirm Password"
+          type="password"
+          value={signupAPIpasswordAgain}
+          onChange={e => {
+            setSignupAPIPasswordAgain(e.target.value);}}
+        />
+        <Button variant="contained" onClick={register}>
           Sign Up
         </Button>
       </Grid>
