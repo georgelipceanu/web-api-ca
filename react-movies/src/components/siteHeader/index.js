@@ -24,14 +24,14 @@ const SiteHeader = ({ history }) => {
   const navigate = useNavigate();
 
   const menuOptions = [
-    { label: "Home", path: "/" },
+    { label: "Home", path: "/home" },
     { label: "Favorite Movies", path: "/movies/favorites" },
     { label: "Favorite Actors", path: "/movies/favorite_actors" },
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Watch List", path: "/movies/watchlist" },
     { label: "Now Playing", path: "/movies/now_playing" },
     { label: "Trending Today", path: "/movies/trending/today" },
-    { label: "Sign In", path: "/signin" }
+    { label: "Sign In", path: "/" }
   ];
 
   const handleMenuSelect = (pageURL) => {

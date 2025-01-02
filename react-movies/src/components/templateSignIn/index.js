@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import { AuthContext } from '../../contexts/authContext';
+import { Link } from "react-router-dom";
 import Header from "../headerMovieList";
 import Grid from "@mui/material/Grid2";
 import { auth } from "../../config/firebase";
@@ -14,6 +17,11 @@ function SignInTemplate() {
     minWidth: 220,
     backgroundColor: "#7ae6a3"
   };
+
+  const context = useContext(AuthContext);
+
+  const [APIuserName, setAPIUserName] = useState("");
+  const [APIpassword, setAPIPassword] = useState("");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -74,6 +82,19 @@ function SignInTemplate() {
     }
   };
 
+  const login = () => {
+      context.authenticate(APIuserName, APIpassword);
+  };
+
+  let location = useLocation();
+
+  // Set 'from' to path where browser is redirected after a successful login - either / or the protected path user requested
+  const { from } = location.state ? { from: location.state.from.pathname } : { from: "/" };
+
+  if (context.isAuthenticated === true) {
+      return <Navigate to={"/home"} />;
+  }
+
   return (
     <>
     <Grid container direction="column" alignItems="center">
@@ -82,14 +103,15 @@ function SignInTemplate() {
       </Grid>
       <Grid container sx={{ flex: "1 1 500px" }} direction="column" alignItems="center">
         <Typography component="h2" variant="h3" style={{ backgroundColor: "#a8a8a8", fontFamily: "sans-serif" }}>
-          Email (Own API)
+          Username (Own API)
         </Typography>
         <TextField
           sx={{ margin: 1, minWidth: 220, backgroundColor: "#7ae6a3" }}
           id="sign-in-email"
-          label="Email"
-          value={email}
-          onChange={handleSignInEmailChange}
+          label="Username"
+          value={APIuserName}
+          onChange={e => {
+            setAPIUserName(e.target.value);}}
         />
         <Typography component="h2" variant="h3" style={{ backgroundColor: "#a8a8a8", fontFamily: "sans-serif" }}>
           Password (Own API)
@@ -99,10 +121,11 @@ function SignInTemplate() {
           id="sign-in-pass"
           label="Password"
           type="password"
-          value={password}
-          onChange={handleSignInPasswordChange}
+          value={APIpassword}
+          onChange={e => {
+            setAPIPassword(e.target.value);}}
         />
-        <Button variant="contained" onClick={signIn}>
+        <Button variant="contained" onClick={login}>
           Sign In
         </Button>
       </Grid>

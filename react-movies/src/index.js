@@ -22,6 +22,8 @@ import CustomTheme from "./components/theme/index"
 import CssBaseline from "@mui/material/CssBaseline";
 import FavoriteActorsPage from "./pages/favouriteActorsPage";
 import SignInPage from "./pages/signInPage";
+import AuthContextProvider from "./contexts/authContext";
+import ProtectedRoutes from "./protectedRoutes";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,6 +41,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+      <AuthContextProvider>
       <ThemeProvider theme={CustomTheme}>
         <CssBaseline />
         <SiteHeader />
@@ -55,14 +58,15 @@ const App = () => {
             <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
             <Route path="/movies/:id" element={<MoviePage />} />
             <Route path="/movies/:id/recommended" element={ <RecommendedPage /> } />
-            <Route path="/" element={<HomePage />} />
-            <Route path="/signin" element={<SignInPage />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/" element={<SignInPage />} />
             <Route path="/actors/:id" element={<ActorPage />} />
             <Route path="*" element={ <Navigate to="/" /> } />
           </Routes>
           </ActorsContextProvider>
         </MoviesContextProvider>
         </ThemeProvider>
+        </AuthContextProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
