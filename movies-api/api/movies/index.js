@@ -3,8 +3,9 @@ import asyncHandler from 'express-async-handler';
 import express from 'express';
 import imagesRouter from './images';
 import reviewsRouter from './reviews';
+import recommendedRouter from './recommended'
 import {
-    getUpcomingMovies, getMovies, getNowPlayingMovies, getTrending, getGenres, getMovie, getMovieReviews
+    getUpcomingMovies, getMovies, getNowPlayingMovies, getTrending, getGenres, getMovie
   } from '../tmdb-api';
 import { get } from 'mongoose';
   
@@ -87,5 +88,6 @@ router.get('/:id', asyncHandler(async (req, res) => {
 
 router.use('/images', imagesRouter);
 router.use('/reviews', reviewsRouter);
+router.use('/recommended', recommendedRouter);
 
 export default router;
