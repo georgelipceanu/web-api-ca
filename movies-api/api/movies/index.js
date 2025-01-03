@@ -1,6 +1,7 @@
 import movieModel from './movieModel';
 import asyncHandler from 'express-async-handler';
 import express from 'express';
+import imagesRouter from './images';
 import {
     getUpcomingMovies, getMovies, getNowPlayingMovies, getTrending, getGenres, getMovie
   } from '../tmdb-api';
@@ -81,5 +82,7 @@ router.get('/:id', asyncHandler(async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch movie detailsssssssss' });
     }
 }));
+
+router.use('/images', imagesRouter);
 
 export default router;
