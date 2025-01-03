@@ -41,8 +41,8 @@ router.get('/np', asyncHandler(async (req, res) => {
         const movies = await getNowPlayingMovies();
         res.status(200).json(movies);
     } catch (error) {
-        console.error('Error fetching movies:', error);
-        res.status(500).json({ error: 'Failed to fetch movies' });
+        console.error('Error fetching np movies:', error);
+        res.status(500).json({ error: 'Failed to fetch np movies' });
     }
 }));
 
@@ -52,8 +52,20 @@ router.get('/trending', asyncHandler(async (req, res) => {
         const movies = await getTrending();
         res.status(200).json(movies);
     } catch (error) {
-        console.error('Error fetching movies:', error);
-        res.status(500).json({ error: 'Failed to fetch movies' });
+        console.error('Error fetching trending movies:', error);
+        res.status(500).json({ error: 'Failed to fetch trending movies' });
+    }
+}));
+
+// GENRES
+router.get('/genres', asyncHandler(async (req, res) => {
+    try {
+        const genres = await getGenres();
+        console.log(genres)
+        res.status(200).json(genres);
+    } catch (error) {
+        console.error('Error fetching genres:', error);
+        res.status(500).json({ error: 'Failed to fetch genres' });
     }
 }));
 
@@ -65,14 +77,9 @@ router.get('/:id', asyncHandler(async (req, res) => {
         if (movie) 
             res.status(200).json(movie);
     } catch (error) {
-        console.error('Error fetching movies:', error);
-        res.status(500).json({ error: 'Failed to fetch movies' });
+        console.error('Error fetching movie details:', error);
+        res.status(500).json({ error: 'Failed to fetch movie detailsssssssss' });
     }
-}));
-
-router.get('/tmdb/genres', asyncHandler(async (req, res) => {
-    const genres = await getGenres();
-    res.status(200).json(genres);
 }));
 
 export default router;
