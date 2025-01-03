@@ -47,7 +47,7 @@ export const getNowPlayingMovies = async () => {
         throw error;
     }
   };
-  
+
   export const getTrending = async () => {
     try {
         const response = await fetch(
@@ -62,7 +62,24 @@ export const getNowPlayingMovies = async () => {
     } catch (error) {
         throw error;
     }
-  };
+};
+
+export const getMovie = async (id) => {
+    //console.log(args)
+    try {
+        const response = await fetch(
+            `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.TMDB_KEY}`
+        );
+
+        if (!response.ok) {
+            throw new Error(response.json().message);
+        }
+
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+};
 
 export const getGenres = async () => {
     try {
