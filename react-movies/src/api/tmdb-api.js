@@ -99,20 +99,31 @@ export const getMovie = (args) => {
    });
   };
 
-export const getNowPlayingMovies = () => {
-  return fetch(
-    `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_TMDB_KEY}`
-  ).then((response) => {
-    if (!response.ok) {
-      return response.json().then((error) => {
-        throw new Error(error.status_message || "Something went wrong");
-      });
+// export const getNowPlayingMovies = () => {
+//   return fetch(
+//     `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_TMDB_KEY}`
+//   ).then((response) => {
+//     if (!response.ok) {
+//       return response.json().then((error) => {
+//         throw new Error(error.status_message || "Something went wrong");
+//       });
+//     }
+//     return response.json();
+//   })
+//   .catch((error) => {
+//       throw error
+//   });
+// };
+
+export const getNowPlayingMovies = async ({ queryKey }) => {
+  const response = await fetch(
+    `http://localhost:8080/api/movies/np`,
+    { headers: {
+      'Authorization': window.localStorage.getItem('token')
+      }
     }
-    return response.json();
-  })
-  .catch((error) => {
-      throw error
-  });
+  )
+  return response.json();
 };
 
 export const getTrending = () => {
