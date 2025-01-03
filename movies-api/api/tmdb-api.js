@@ -47,6 +47,22 @@ export const getNowPlayingMovies = async () => {
         throw error;
     }
   };
+  
+  export const getTrending = async () => {
+    try {
+        const response = await fetch(
+            `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.TMDB_KEY}&language=en-US`
+        );
+
+        if (!response.ok) {
+            throw new Error(response.json().message);
+        }
+
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+  };
 
 export const getGenres = async () => {
     try {

@@ -2,7 +2,7 @@ import movieModel from './movieModel';
 import asyncHandler from 'express-async-handler';
 import express from 'express';
 import {
-    getUpcomingMovies, getMovies, getNowPlayingMovies, getGenres
+    getUpcomingMovies, getMovies, getNowPlayingMovies, getTrending, getGenres
   } from '../tmdb-api';
   
 const router = express.Router();
@@ -30,7 +30,7 @@ router.get('/home', asyncHandler(async (req, res) => {
         const movies = await getMovies(page);
         res.status(200).json(movies);
     } catch (error) {
-        console.error('Error fetching upcoming movies:', error);
+        console.error('Error fetching movies:', error);
         res.status(500).json({ error: 'Failed to fetch movies' });
     }
 }));
@@ -41,7 +41,18 @@ router.get('/np', asyncHandler(async (req, res) => {
         const movies = await getNowPlayingMovies();
         res.status(200).json(movies);
     } catch (error) {
-        console.error('Error fetching upcoming movies:', error);
+        console.error('Error fetching movies:', error);
+        res.status(500).json({ error: 'Failed to fetch movies' });
+    }
+}));
+
+// TRENDING
+router.get('/trending', asyncHandler(async (req, res) => {
+    try {
+        const movies = await getTrending();
+        res.status(200).json(movies);
+    } catch (error) {
+        console.error('Error fetching movies:', error);
         res.status(500).json({ error: 'Failed to fetch movies' });
     }
 }));
