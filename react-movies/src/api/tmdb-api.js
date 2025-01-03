@@ -1,29 +1,9 @@
-export const getMovies = ({ queryKey }) => {
-  const [, pagePart] = queryKey;
-  const { page } = pagePart;
-
-  return fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}`
-  )
-    .then((response) => {
-      if (!response.ok) {
-        return response.json().then((error) => {
-          throw new Error(error.status_message || "Something went wrong");
-        });
-      }
-      return response.json();
-    })
-    .catch((error) => {
-      throw error;
-    });
-};
-
-export const getUpcomingMovies = async ({ queryKey }) => {
+export const getMovies = async ({ queryKey }) => {
   const [, pagePart] = queryKey;
   const { page } = pagePart;
   
   const response = await fetch(
-    `http://localhost:8080/api/movies/tmdb/upcoming?page=${page}`,
+    `http://localhost:8080/api/movies/home?page=${page}`,
     { headers: {
       'Authorization': window.localStorage.getItem('token')
       }
@@ -32,14 +12,17 @@ export const getUpcomingMovies = async ({ queryKey }) => {
   return response.json();
 };
 
-export const logins = async (username, password) => {
-  const response = await fetch('http://localhost:8080/api/users', {
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      method: 'post',
-      body: JSON.stringify({ username: username, password: password })
-  });
+export const getUpcomingMovies = async ({ queryKey }) => {
+  const [, pagePart] = queryKey;
+  const { page } = pagePart;
+  
+  const response = await fetch(
+    `http://localhost:8080/api/movies/upcoming?page=${page}`,
+    { headers: {
+      'Authorization': window.localStorage.getItem('token')
+      }
+    }
+  )
   return response.json();
 };
 
