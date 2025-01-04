@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import express from 'express';
 import imagesRouter from './images';
+import moviesRouter from './movies'
 import { getActor } from '../tmdb-api';
 
 const router = express.Router();
@@ -19,5 +20,6 @@ router.get('/:id', asyncHandler(async (req, res) => {
 }));
 
 router.use('/images', imagesRouter);
+router.use('/movies', moviesRouter);
 
 export default router;

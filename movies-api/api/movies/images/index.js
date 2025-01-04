@@ -6,8 +6,7 @@ const router = express.Router();
 
 // Get movie images
 router.get('/:id', asyncHandler(async (req, res) => {
-    const id = parseInt(req.params.id, 10);
-
+    const id = parseInt(req.params.id, 10); // BASE 10
 
     try {
         const images = await getMovieImages(id);
