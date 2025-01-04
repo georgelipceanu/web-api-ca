@@ -251,3 +251,29 @@ export const updateFavouriteActors = async (username, actor_ids) => {
   );
   return response.json();
 }
+
+
+export const getWatchlist = async (username) => {
+  const response = await fetch(
+    `http://localhost:8080/api/watchlist/${username}`,
+    { headers: {
+      'Authorization': window.localStorage.getItem('token')
+      }
+    }
+  );
+  return response.json();
+}
+
+export const updateWatchlist = async (username, movie_ids) => {
+  const response = await fetch(
+    `http://localhost:8080/api/favourites/watchlist/${username}`,
+    { headers: {
+      'Authorization': window.localStorage.getItem('token'),
+      'Content-Type': 'application/json'
+      },
+      method: 'put',
+      body: JSON.stringify({ movie_ids: movie_ids })
+    }
+  );
+  return response.json();
+}

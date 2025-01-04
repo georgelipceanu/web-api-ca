@@ -34,6 +34,10 @@ const MoviesContextProvider = (props) => {
     setMyReviews( {...myReviews, [movie.id]: review } )
   };
 
+  const loadWatchlist = (ids) => {
+    setWatchList(ids);
+  }
+
   const addToWatchList = (movie) => {
     let newWatchList = [];
     if (!watchList.includes(movie.id)){
@@ -62,6 +66,7 @@ const MoviesContextProvider = (props) => {
         addToFavorites,
         removeFromFavorites,
         addReview,
+        loadWatchlist,
         addToWatchList,
         removeFromWatchList,
       }}

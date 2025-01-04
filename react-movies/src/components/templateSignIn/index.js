@@ -10,7 +10,7 @@ import { auth } from "../../config/firebase";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth"; 
 import { Button, Typography, Alert, Snackbar } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { getFavouriteMovies, getFavouriteActors } from "../../api/tmdb-api";
+import { getFavouriteMovies, getFavouriteActors, getWatchlist } from "../../api/tmdb-api";
 
 function SignInTemplate() {
 
@@ -102,9 +102,20 @@ function SignInTemplate() {
       } catch (error) {
         console.error("Error fetching favourite movies:", error);
       }
+
+      try {
+        const movies = await getWatchlist(APIuserName);
+        console.log("WATCHLIST:", movies); 
+        const ids = movies.movie_ids;
+        console.log("WATCHLIST IDS:", ids);
+        movieContext.loadWatchlist(ids);
+      } catch (error) {
+        console.error("Error fetching watchlist:", error);
+      }
+
       try {
         const actors = await getFavouriteActors(APIuserName);
-        console.log("FAV MOVIES:", actors); 
+        console.log("FAV ACTORS:", actors); 
         const ids = actors.actor_ids;
         console.log("FAV IDS:", ids);
         actorsContext.loadFavourites(ids);

@@ -7,6 +7,7 @@ import defaultErrHandler from './errHandler'
 import moviesRouter from './api/movies';   //import movies router
 import actorsRouter from './api/actors';
 import favouritesRouter from './api/favourites';
+import watchlistRouter from './api/watchlist/';
 import authenticate from './authenticate';
 
 dotenv.config();
@@ -19,7 +20,8 @@ app.use(express.json());
 
 app.use('/api/movies', authenticate, moviesRouter);
 app.use('/api/actors', authenticate, actorsRouter);
-app.use('/api/favourites', authenticate, favouritesRouter)
+app.use('/api/favourites', authenticate, favouritesRouter);
+app.use('/api/watchlist', authenticate, watchlistRouter);
 app.use('/api/users', usersRouter);
 
 app.use(defaultErrHandler);

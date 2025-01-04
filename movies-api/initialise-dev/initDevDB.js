@@ -5,10 +5,12 @@ import users from './users';
 import movies from './movies';
 import favMovies from './favMovies';
 import favActors from './favActors';
+import watchlist from './watchlist';
 import User from '../api/users/userModel';
 import Movie from '../api/movies/movieModel';
 import FavoriteMovie from '../api/favourites/favouriteModel';
 import FavoriteActor from '../api/favourites/favouriteModelA';
+import Watchlist from '../api/watchlist/watchlistModel';
 
 async function main() {
     if (process.env.NODE_ENV !== 'development') {
@@ -21,16 +23,19 @@ async function main() {
     await Movie.collection.drop().catch(err => console.log('Movie collection not found'));
     await FavoriteMovie.collection.drop().catch(err => console.log('FavouriteMovie collection not found'));
     await FavoriteActor.collection.drop().catch(err => console.log('FavouriteActor collection not found'));
+    await Watchlist.collection.drop().catch(err => console.log('Watchlist collection not found'));
 
     await User.create(users);
     await Movie.create(movies);
     await FavoriteMovie.create(favMovies);
     await FavoriteActor.create(favActors);
+    await Watchlist.create(watchlist);
     console.log('Database initialised');
     console.log(`${users.length} users loaded`);
     console.log(`${movies.length} movies loaded`);
     console.log(`${favMovies.length} fav movies loaded`);
     console.log(`${favActors.length} fav actors loaded`);
+    console.log(`${watchlist.length} watchlist loaded`);
     await mongoose.disconnect();
 }
 
