@@ -266,7 +266,7 @@ export const getWatchlist = async (username) => {
 
 export const updateWatchlist = async (username, movie_ids) => {
   const response = await fetch(
-    `http://localhost:8080/api/favourites/watchlist/${username}`,
+    `http://localhost:8080/api/watchlist/${username}`,
     { headers: {
       'Authorization': window.localStorage.getItem('token'),
       'Content-Type': 'application/json'
