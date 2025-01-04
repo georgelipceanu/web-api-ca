@@ -4,7 +4,7 @@ import asyncHandler from 'express-async-handler';
 
 const router = express.Router(); // eslint-disable-line
 
-// Get favourites
+// Get watchlist
 router.get('/:id', asyncHandler(async (req, res) => {
     const id = req.params.id;
     const movies = await WatchlistMovie.findByUsername(id);

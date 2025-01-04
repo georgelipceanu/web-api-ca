@@ -92,41 +92,50 @@ function SignInTemplate() {
   };
 
   const login = async () => {
-      context.authenticate(APIuserName, APIpassword);
-      try {
-        const movies = await getFavouriteMovies(APIuserName);
-        console.log("FAV MOVIES:", movies); 
-        const ids = movies.movie_ids;
-        console.log("FAV IDS:", ids);
-        movieContext.loadFavourites(ids);
-      } catch (error) {
-        console.error("Error fetching favourite movies:", error);
-      }
+    await context.authenticate(APIuserName, APIpassword);
+    try {
+      const movies = await getFavouriteMovies(APIuserName);
+      console.log("FAV MOVIES:", movies); 
+      const ids = movies.movie_ids;
+      console.log("FAV IDS:", ids);
+      movieContext.loadFavourites(ids);
+    } catch (error) {
+      console.error("Error fetching favourite movies:", error);
+    }
 
-      try {
-        const movies = await getWatchlist(APIuserName);
-        console.log("WATCHLIST:", movies); 
-        const ids = movies.movie_ids;
-        console.log("WATCHLIST IDS:", ids);
-        movieContext.loadWatchlist(ids);
-      } catch (error) {
-        console.error("Error fetching watchlist:", error);
-      }
+    try {
+      const movies = await getWatchlist(APIuserName);
+      console.log("WATCHLIST:", movies); 
+      const ids = movies.movie_ids;
+      console.log("WATCHLIST IDS:", ids);
+      movieContext.loadWatchlist(ids);
+    } catch (error) {
+      console.error("Error fetching watchlist:", error);
+    }
 
-      try {
-        const actors = await getFavouriteActors(APIuserName);
-        console.log("FAV ACTORS:", actors); 
-        const ids = actors.actor_ids;
-        console.log("FAV IDS:", ids);
-        actorsContext.loadFavourites(ids);
-      } catch (error) {
-        console.error("Error fetching favourite actors:", error);
-      }
+    try {
+      const actors = await getFavouriteActors(APIuserName);
+      console.log("FAV ACTORS:", actors); 
+      const ids = actors.actor_ids;
+      console.log("FAV IDS:", ids);
+      actorsContext.loadFavourites(ids);
+    
+    } catch (error) {
+      console.error("Error fetching favourite actors:", error);
+      
+    }
+
+    if (context.isAuthenticated !== true) {
+      setPopupSeverity("error");
+      setPopupMessage("Invalid Credentials");
+      setPopupOpen(true);
+    }
   };
 
 
   if (context.isAuthenticated === true) {
     return <Navigate to={"/home"} />;
+
   }
 
   const register = () => {
@@ -137,12 +146,18 @@ function SignInTemplate() {
       context.register(signupAPIuserName, signupAPIpassword);
       setRegistered(true);
       console.log("success")
-    } else console.log("fail")
+
+      setPopupSeverity("success");
+      setPopupMessage("Sign up successful! You can now log in.");
+      setPopupOpen(true);
+    } else {
+      console.log("fail");
+      setPopupSeverity("error");
+      setPopupMessage("Password must be valid and match confirmation.");
+      setPopupOpen(true);
+    }
   }
 
-  if (registered === true) {
-    return <Navigate to="/home" />;
-  }
 
   return (
     <>
