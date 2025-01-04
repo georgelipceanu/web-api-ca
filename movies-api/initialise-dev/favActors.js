@@ -1,7 +1,7 @@
 const favActors = [
     {
         username: "user1",
-        actor_ids: []
+        actor_ids: [2326151]
     },
     {
         username: "user2",

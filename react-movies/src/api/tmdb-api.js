@@ -212,3 +212,14 @@ export const getFavouriteMovies = async (username) => {
   );
   return response.json();
 }
+
+export const getFavouriteActors = async (username) => {
+  const response = await fetch(
+    `http://localhost:8080/api/favourites/actors/${username}`,
+    { headers: {
+      'Authorization': window.localStorage.getItem('token')
+      }
+    }
+  );
+  return response.json();
+}

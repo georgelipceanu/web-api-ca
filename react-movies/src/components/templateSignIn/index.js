@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from '../../contexts/authContext';
 import { MoviesContext } from '../../contexts/moviesContext';
+import { ActorsContext } from '../../contexts/actorsContext';
 import { Link } from "react-router-dom";
 import Header from "../headerMovieList";
 import Grid from "@mui/material/Grid2";
@@ -9,7 +10,7 @@ import { auth } from "../../config/firebase";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth"; 
 import { Button, Typography, Alert, Snackbar } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { getFavouriteMovies } from "../../api/tmdb-api";
+import { getFavouriteMovies, getFavouriteActors } from "../../api/tmdb-api";
 
 function SignInTemplate() {
 
@@ -22,6 +23,7 @@ function SignInTemplate() {
 
   const context = useContext(AuthContext);
   const movieContext = useContext(MoviesContext);
+  const actorsContext = useContext(ActorsContext);
 
   const [APIuserName, setAPIUserName] = useState("");
   const [APIpassword, setAPIPassword] = useState("");
@@ -99,7 +101,16 @@ function SignInTemplate() {
         movieContext.loadFavourites(ids);
       } catch (error) {
         console.error("Error fetching favourite movies:", error);
-    }
+      }
+      try {
+        const actors = await getFavouriteActors(APIuserName);
+        console.log("FAV MOVIES:", actors); 
+        const ids = actors.actor_ids;
+        console.log("FAV IDS:", ids);
+        actorsContext.loadFavourites(ids);
+      } catch (error) {
+        console.error("Error fetching favourite actors:", error);
+      }
   };
 
 

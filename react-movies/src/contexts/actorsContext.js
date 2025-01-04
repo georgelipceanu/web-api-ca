@@ -5,6 +5,11 @@ export const ActorsContext = React.createContext(null);
 const ActorsContextProvider = (props) => { //BOILEPLATE CODE FROM MOVIES CONTEXT
   const [favorites, setFavorites] = useState( [] )
 
+  
+  const loadFavourites = (ids) => {
+    setFavorites(ids);
+  }
+
   const addToFavorites = (actor) => {
     let newFavorites = [];
     if (!favorites.includes(actor.id)){
@@ -31,6 +36,7 @@ const ActorsContextProvider = (props) => { //BOILEPLATE CODE FROM MOVIES CONTEXT
         favorites,
         addToFavorites,
         removeFromFavorites,
+        loadFavourites
       }}
     >
       {props.children}
