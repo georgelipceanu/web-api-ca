@@ -213,6 +213,20 @@ export const getFavouriteMovies = async (username) => {
   return response.json();
 }
 
+export const updateFavouriteMovies = async (username, movie_ids) => {
+  const response = await fetch(
+    `http://localhost:8080/api/favourites/movies/${username}`,
+    { headers: {
+      'Authorization': window.localStorage.getItem('token'),
+      'Content-Type': 'application/json'
+      },
+      method: 'put',
+      body: JSON.stringify({ movie_ids: movie_ids })
+    }
+  );
+  return response.json();
+}
+
 export const getFavouriteActors = async (username) => {
   const response = await fetch(
     `http://localhost:8080/api/favourites/actors/${username}`,

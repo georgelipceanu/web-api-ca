@@ -3,19 +3,32 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { MoviesContext } from "../../contexts/moviesContext";
 import { ActorsContext } from "../../contexts/actorsContext";
+import { AuthContext } from "../../contexts/authContext";
+import { updateFavouriteMovies } from "../../api/tmdb-api";
 
 const RemoveFromFavoritesIcon = ({ movie, actor }) => {
   const context = useContext(MoviesContext);
   const aContext = useContext(ActorsContext);
+  const authContext = useContext(AuthContext);
 
-  const handleRemoveFromFavorites = (e) => {
+  const handleRemoveFromFavorites = async (e) => {
+
     e.preventDefault();
     if (movie) {
-      context.removeFromFavorites(movie);
+      try {
+        const updatedFavorites = context.favorites.filter((id) => id !== movie.id); // KEEP EVERYTHING EXCEPT FOR MOVIE.ID
+        console.log("UPDATED FAVS BEFORE API CALL:", updatedFavorites);
+        context.removeFromFavorites(movie);
+        const response = await updateFavouriteMovies(authContext.userName, updatedFavorites);
+        console.log(response);
+      } catch (error) {
+        console.error("Error updating favorite movies:", error);
+      }
     } else if (actor) {
       aContext.removeFromFavorites(actor);
     }
   };
+
   return (
     <IconButton
       aria-label="remove from favorites"
