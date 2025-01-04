@@ -161,6 +161,22 @@ export const getActor = async (id) => {
         throw error;
     }
 };
+
+export const getActorImages = async (id) => {
+    try {
+        const response = await fetch(
+            `https://api.themoviedb.org/3/person/${id}/images?api_key=${process.env.TMDB_KEY}`
+        );
+
+        if (!response.ok) {
+            throw new Error(response.json().message);
+        }
+
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+};
   
 export const getGenres = async () => {
     try {
