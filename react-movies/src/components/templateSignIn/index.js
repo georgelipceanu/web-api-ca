@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from '../../contexts/authContext';
+import { MoviesContext } from '../../contexts/moviesContext';
 import { Link } from "react-router-dom";
 import Header from "../headerMovieList";
 import Grid from "@mui/material/Grid2";
@@ -8,6 +9,7 @@ import { auth } from "../../config/firebase";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth"; 
 import { Button, Typography, Alert, Snackbar } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import { getFavouriteMovies } from "../../api/tmdb-api";
 
 function SignInTemplate() {
 
@@ -19,6 +21,7 @@ function SignInTemplate() {
   };
 
   const context = useContext(AuthContext);
+  const movieContext = useContext(MoviesContext);
 
   const [APIuserName, setAPIUserName] = useState("");
   const [APIpassword, setAPIPassword] = useState("");
@@ -86,13 +89,22 @@ function SignInTemplate() {
     }
   };
 
-  const login = () => {
+  const login = async () => {
       context.authenticate(APIuserName, APIpassword);
+      try {
+        const movies = await getFavouriteMovies(APIuserName);
+        console.log("FAV MOVIES:", movies); 
+        const ids = movies.movie_ids;
+        console.log("FAV IDS:", ids);
+        movieContext.loadFavourites(ids);
+      } catch (error) {
+        console.error("Error fetching favourite movies:", error);
+    }
   };
 
 
   if (context.isAuthenticated === true) {
-      return <Navigate to={"/home"} />;
+    return <Navigate to={"/home"} />;
   }
 
   const register = () => {

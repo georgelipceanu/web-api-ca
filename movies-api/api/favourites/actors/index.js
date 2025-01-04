@@ -1,5 +1,5 @@
 import express from 'express';
-import FavouriteActor from './favouriteModelA';
+import FavouriteActor from '../favouriteModelA';
 import asyncHandler from 'express-async-handler';
 
 const router = express.Router(); // eslint-disable-line
