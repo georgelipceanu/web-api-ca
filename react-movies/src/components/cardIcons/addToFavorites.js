@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { MoviesContext } from "../../contexts/moviesContext";
 import { ActorsContext } from "../../contexts/actorsContext";
 import { AuthContext } from "../../contexts/authContext";
-import { updateFavouriteMovies } from "../../api/tmdb-api";
+import { updateFavouriteMovies, updateFavouriteActors } from "../../api/tmdb-api";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
@@ -24,7 +24,15 @@ const AddToFavoritesIcon = ({ movie, actor }) => {
         console.error("Error updating favorite movies:", error);
       }
     } else if (actor) {
-      actorsContext.addToFavorites(actor);
+      try {
+        const updatedFavorites = [...actorsContext.favorites, actor.id];
+        console.log("UPDATED FAVS:", updatedFavorites);
+        actorsContext.addToFavorites(actor);
+        const response = await updateFavouriteActors(authContext.userName, updatedFavorites);
+        console.log(response);
+      } catch (error) {
+        console.error("Error updating favorite actors:", error);
+      }  
     }
   };
 

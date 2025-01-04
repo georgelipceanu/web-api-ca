@@ -237,3 +237,17 @@ export const getFavouriteActors = async (username) => {
   );
   return response.json();
 }
+
+export const updateFavouriteActors = async (username, actor_ids) => {
+  const response = await fetch(
+    `http://localhost:8080/api/favourites/actors/${username}`,
+    { headers: {
+      'Authorization': window.localStorage.getItem('token'),
+      'Content-Type': 'application/json'
+      },
+      method: 'put',
+      body: JSON.stringify({ actor_ids: actor_ids })
+    }
+  );
+  return response.json();
+}

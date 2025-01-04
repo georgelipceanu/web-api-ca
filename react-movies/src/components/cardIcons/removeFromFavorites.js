@@ -4,7 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { MoviesContext } from "../../contexts/moviesContext";
 import { ActorsContext } from "../../contexts/actorsContext";
 import { AuthContext } from "../../contexts/authContext";
-import { updateFavouriteMovies } from "../../api/tmdb-api";
+import { updateFavouriteMovies, updateFavouriteActors } from "../../api/tmdb-api";
 
 const RemoveFromFavoritesIcon = ({ movie, actor }) => {
   const context = useContext(MoviesContext);
@@ -25,7 +25,15 @@ const RemoveFromFavoritesIcon = ({ movie, actor }) => {
         console.error("Error updating favorite movies:", error);
       }
     } else if (actor) {
-      aContext.removeFromFavorites(actor);
+      try {
+        const updatedFavorites = aContext.favorites.filter((id) => id !== actor.id); // KEEP EVERYTHING EXCEPT FOR actor.ID
+        console.log("UPDATED FAVS BEFORE API CALL:", updatedFavorites);
+        aContext.removeFromFavorites(actor);
+        const response = await updateFavouriteActors(authContext.userName, updatedFavorites);
+        console.log(response);
+      } catch (error) {
+        console.error("Error updating favorite movies:", error);
+      } 
     }
   };
 
