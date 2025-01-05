@@ -143,13 +143,21 @@ function SignInTemplate() {
     const validPassword = passwordRegEx.test(signupAPIpassword);
 
     if (validPassword && signupAPIpassword === signupAPIpasswordAgain) {
-      context.register(signupAPIuserName, signupAPIpassword);
-      setRegistered(true);
-      console.log("success")
-
-      setPopupSeverity("success");
-      setPopupMessage("Sign up successful! You can now log in.");
-      setPopupOpen(true);
+      context.register(signupAPIuserName, signupAPIpassword).then((isRegistered) => {
+        if (isRegistered) {
+          setRegistered(true);
+          console.log("success");
+  
+          setPopupSeverity("success");
+          setPopupMessage("Sign up successful! You can now log in.");
+          setPopupOpen(true);
+        } else {
+          console.log("fail");
+          setPopupSeverity("error");
+          setPopupMessage("Error signing up. Username might already be taken.");
+          setPopupOpen(true);
+        }
+      });
     } else {
       console.log("fail");
       setPopupSeverity("error");
