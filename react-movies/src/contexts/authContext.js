@@ -26,12 +26,14 @@ const AuthContextProvider = (props) => {
 
   const register = async (username, password) => {
     const result = await signup(username, password);
+
     if (!result.success) {
-      console.log(`Signup failed: ${result.msg}`);
+      console.error(`Signup failed: ${result.msg}`);
       return false;
-    }  
-    console.log("RESULT: "+result.code);
-    return (result.code == 201 ) ? true : false;
+    }
+  
+    console.log("RESULT: " + result);
+    return true;
   };
 
   const signout = () => {

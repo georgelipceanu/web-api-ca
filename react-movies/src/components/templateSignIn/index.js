@@ -139,9 +139,9 @@ function SignInTemplate() {
   }
 
   const register = () => {
-    let passwordRegEx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    const passwordRegEx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
     const validPassword = passwordRegEx.test(signupAPIpassword);
-
+  
     if (validPassword && signupAPIpassword === signupAPIpasswordAgain) {
       context.register(signupAPIuserName, signupAPIpassword).then((isRegistered) => {
         if (isRegistered) {
@@ -161,10 +161,10 @@ function SignInTemplate() {
     } else {
       console.log("fail");
       setPopupSeverity("error");
-      setPopupMessage("Error signing up.");
+      setPopupMessage("Invalid password or passwords do not match.");
       setPopupOpen(true);
     }
-  }
+  };
 
 
   return (
