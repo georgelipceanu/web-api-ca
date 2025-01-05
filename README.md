@@ -68,7 +68,7 @@ Give an overview of your web API design, perhaps similar to the following:
 - /api/favourites/actors/{username} | PUT | Update a users favourite actors.
 - /api/watchlist/{username} | PUT | Update a users watchlist.
 
-[Swaggerhub](https://app.swaggerhub.com/).
+[Swaggerhub](https://app.swaggerhub.com/apis/20103125/Movies-API/1.0.0).
 
 ## Security and Authentication
 

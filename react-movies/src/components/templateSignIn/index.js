@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from '../../contexts/authContext';
 import { MoviesContext } from '../../contexts/moviesContext';
@@ -39,6 +39,13 @@ function SignInTemplate() {
   const [popupMessage, setPopupMessage] = useState("");
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupSeverity, setPopupSeverity] = useState("success");
+
+  useEffect(() => {
+    movieContext.loadFavourites([]); // RESET CONTEXTS WHEN THIS PAGE IS VISITED
+    movieContext.loadWatchlist([]); 
+    actorsContext.loadFavourites([]);
+    
+  }, [movieContext, actorsContext]);
 
   const handleSignInEmailChange = (e) => {
     setEmail(e.target.value);
