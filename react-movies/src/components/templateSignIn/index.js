@@ -163,7 +163,7 @@ function SignInTemplate() {
     <>
     <Grid container direction="column" alignItems="center">
       <Grid size={12}>
-        <Header title={"Sign In"} subHeader={true} />
+        <Header title={"Sign In/Up"} subHeader={true} />
       </Grid>
       <Grid container sx={{ flex: "1 1 500px" }} direction="column" alignItems="center">
         <Typography component="h2" variant="h3" style={{ backgroundColor: "#a8a8a8", fontFamily: "sans-serif" }}>

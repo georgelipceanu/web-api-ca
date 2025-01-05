@@ -32,7 +32,6 @@ const SiteHeader = ({ history }) => {
     { label: "Watch List", path: "/movies/watchlist" },
     { label: "Now Playing", path: "/movies/now_playing" },
     { label: "Trending Today", path: "/movies/trending/today" },
-    { label: "Sign In", path: "/" }
   ];
 
   const handleMenuSelect = (pageURL) => {
@@ -105,6 +104,21 @@ const SiteHeader = ({ history }) => {
                 ))}
               </>
             )}
+            {context.isAuthenticated ? (
+            <Button 
+              color="inherit" 
+              onClick={context.signout} 
+            >
+              Sign Out
+            </Button>
+          ) : (
+            <Button 
+              color="inherit" 
+              onClick={() => handleMenuSelect("/")}
+            >
+              Sign In/Up
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
       <Offset />
