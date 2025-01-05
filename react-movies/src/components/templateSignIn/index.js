@@ -153,7 +153,7 @@ function SignInTemplate() {
     } else {
       console.log("fail");
       setPopupSeverity("error");
-      setPopupMessage("Password must be valid and match confirmation.");
+      setPopupMessage("Error signing up.");
       setPopupOpen(true);
     }
   }

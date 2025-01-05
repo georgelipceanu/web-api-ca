@@ -10,10 +10,15 @@ const UserSchema = new Schema({
 
 UserSchema.methods.comparePassword = async function (passw) { 
   return await bcrypt.compare(passw, this.password); 
-}
+};
 
 UserSchema.statics.findByUserName = function (username) {
   return this.findOne({ username: username });
+};
+
+UserSchema.statics.isUsernameTaken = async function (username) {
+  const user = await this.findOne({ username: username });
+  return !!user; // TRUE IF NOT FOUND, FALSE IF FOUND  
 };
 
 UserSchema.pre('save', async function(next) {

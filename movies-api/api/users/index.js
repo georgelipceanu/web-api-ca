@@ -11,8 +11,6 @@ router.get('/', async (req, res) => {
     res.status(200).json(users);
 });
 
-//.... code as before
-
 // register(Create)/Authenticate User
 router.post('/', asyncHandler(async (req, res) => {
     try {
@@ -31,9 +29,6 @@ router.post('/', asyncHandler(async (req, res) => {
     }
 }));
 
-// ... Code as before
-
-
 // Update a user
 router.put('/:id', async (req, res) => {
     if (req.body._id) delete req.body._id;
@@ -48,9 +43,19 @@ router.put('/:id', async (req, res) => {
 });
 
 async function registerUser(req, res) {
-    // Add input validation logic here
-    await User.create(req.body);
-    res.status(201).json({ success: true, msg: 'User successfully created.' });
+    const { username, password } = req.body;
+    const isTaken = await User.isUsernameTaken(username);
+    if (isTaken) {
+        return res.status(400).json({ success: false, msg: 'Username is already taken.' });
+    }
+    try {
+        const newUser = new User({ username, password });
+        await newUser.save();
+        res.status(201).json({ success: true, msg: 'User successfully created.' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, msg: 'Error creating user.' });
+    }
 }
 
 async function authenticateUser(req, res) {
