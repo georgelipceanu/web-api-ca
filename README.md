@@ -24,24 +24,24 @@ Create .env files in both directories
 
 movies-api/.env
 ______________________
-NODEENV=development
-PORT=8080
-HOST=localhost
-mongoDB= YOUR MONGO URL
-TMDB_KEY= YOUR TMDB KEY
-secret= YOUR JWT SECRET
++ NODEENV=development
++ PORT=8080
++ HOST=localhost
++ mongoDB= YOUR MONGO URL
++ TMDB_KEY= YOUR TMDB KEY
++ secret= YOUR JWT SECRET
 ______________________
 
 react-movies/.env
 ______________________
-REACT_APP_TMDB_KEY= YOUR TMDB KEY
-FIREBASE_API_KEY= YOUR FIREBASE CREDENTIALS
-FIREBASE_AUTH_DOMAIN=
-FIREBASE_PROJECT_ID=
-FIREBASE_STORAGE_BUCKET=
-FIREBASE_MESSAGE_SENDER_ID=
-FIREBASE_APP_ID=
-FAST_REFRESH=false
++ REACT_APP_TMDB_KEY= YOUR TMDB KEY
++ FIREBASE_API_KEY= YOUR FIREBASE CREDENTIALS
++ FIREBASE_AUTH_DOMAIN=
++ FIREBASE_PROJECT_ID=
++ FIREBASE_STORAGE_BUCKET=
++ FIREBASE_MESSAGE_SENDER_ID=
++ FIREBASE_APP_ID=
++ FAST_REFRESH=false
 ______________________
 
 ## API Design
@@ -72,11 +72,18 @@ Give an overview of your web API design, perhaps similar to the following:
 
 ## Security and Authentication
 
-Give details of authentication/security implemented on the API (e.g. passport/sessions). Indicate which routes are protected.
++ Users are registered and authenticated using post endpoint
++ Salting and hashing of passwords is performed before being put onto Mongo to keep passwords secret
++ JWT tokens are issued upon authentication, allowing users to access protected routes (which are all routes except for the sign in/up page)
++ Username and passwords are validated from the endpoint (username must be unique, passwords must include at least 8 characters, 1 upper and lower case, number and symbol, with error and success messages)
 
 ## Integrating with React App
 
 Describe how you integrated your React app with the API. List the views that use your Web API instead of the TMDB API. Describe any other updates to the React app from Assignment One.
+
++ Fully connected React frontend with backend
++ Backend makes all calls to TMDB and MongoDB, which frontend fetches through connected backend API calls
++ New collections made in MongoDB (favouritemovies, favouriteactors, watchlist)
 
 ## Independent learning
 
